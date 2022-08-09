@@ -1,6 +1,6 @@
 # COMPOSITION API CRASH COURSE NOTES
 
-## 3. Composition API: Switching Over
+### 3. Composition API: Switching Over
 ##### Data and Methods
 - Everything in the template stays the same ( works the same way )
 - Script section is different
@@ -95,7 +95,74 @@ import { ref } from "vue";
 
 ```
 
-## 7. Custom Directives
+### 4. Refs, Reactive Objects & Nonreactive data
+- 3 Main types of data used in composition api app
+  - Refs
+  - Reactive objects
+  - Non reactive data
+
+#### Refs
+- Handy for storing simple independent items of data
+- Make changes by accessing the *.value* property of the variable
+- Can add as many refs as you want just avoid name clashes
+```js
+//import
+import {ref} from 'vue'
+//setup
+const count = ref(0)
+//use
+count.value += 10
+```
+
+#### Two Way Data Binding
+- Works exactly the same as the options API
+- v-model = v-bind + v-on:input
+```html
+<!-- TEMPLATE -->
+<div class="edit-title">
+<!-- data -->
+    <h3>{{counterTitle}}</h3>
+    <!-- 2 way data binding -->
+    <input v-model="counter.title" />
+  </div>
+```
+
+```js
+//SCRIPT 
+ const counterTitle = ref("My Title")
+```
+
+#### Reactive Objects
+- Used for storing complex data related to each other (objects)
+- Access properties using dot notation
+
+```js
+//import
+import {reactive} from 'vue'
+//setup
+const counterData = reactive({
+  count: 0,
+  title: "My Counter"
+})
+```
+```html
+<!-- use -->
+<span class="counter"> {{counterData.count}}</span
+```
+#### Non Reactive Data
+- For data properties that don't need to be reactive
+- Use when necessary to improve app performance
+- Just use standard variable declaration
+
+```js
+//SCRIPT
+const appTitle = "My Amazing App!"
+```
+```html
+<!-- TEMPLATE -->
+<h2>{{appTitle}}</h2>
+```
+### 7. Custom Directives
 - Camel case start with v.
 - Can make global by putting into own file and exporting
 - export (directive name)
