@@ -287,7 +287,7 @@ const route = useRoute();
 ```
 
 
-##### Use Route
+##### Use Router
 
 ```js
 //IMPORT
@@ -531,13 +531,14 @@ emit("hideModal")
 }
 ```
 
-###### ModelValue
+##### ModelValue
 - Can access ref directly from child component
 - Massively simplifies child to parent communication
 - Often removes the need for custom events and listening for them
 - v-model 
 - modelValue
 
+- Hook up **v-model** to parent component
 ```js
 // PARENT
 <Modal v-model="showModal"> //data
@@ -545,7 +546,7 @@ emit("hideModal")
 ```
 
 
-- In child accept modelValue as props
+- In child accept **modelValue** as **props**
 ```js
   //CHILD
 //script
@@ -557,6 +558,7 @@ const props = defineProps({
 })
 ```
 - In template change the v-if to the *boolean* value of modelValue (passed as props)
+- Use the modelValue in template by setting the value of a property
 ```html
 <!-- template -->
 <div 
@@ -566,8 +568,10 @@ const props = defineProps({
 </div>
 ```
 
-##### Update Model Value
-- Whatever value passed in with v-model will be changed directly to whatever we pass in update model value
+#### Update Model Value
+- A special event allows to directly modify a value coming from parent component (v-model) without emitting events from the child component
+- Whatever value passed in with v-model will be changed directly to whatever we *pass as the second parameter*
+- Child updates will now be seen by parent
 - Emit (update:modelValue, desired value) in the child component
 - Add to emits array
 
@@ -576,13 +580,31 @@ const props = defineProps({
 const emits = defineEmits(["update:modelValue"])
 
 const handleButtonClick () => {
-  emit(update:modelValue, false)
+  //false is the value passed to parent
+  emit(update:modelValue, false) 
 }
 ```
 
-- Can emit directly from template
+- Can emit directly from template 
 ```html
-<button @click="$emit('update:modelValue', false)"> Hide Modal </button>
+<textarea
+            v-model="modelValue"
+            @input="$emit('update:modelValue', modelValue)"
+            class="textarea"
+            placeholder="Add a new note"
+            ref="newNoteRef"
+          />
+```
+
+#### Expose Child Methods to Parents
+- use defineExpose to make child methods available to parents
+- This allows parent components to trigger a function on a child component
+- no need to import
+
+```js
+defineExpose({
+  functionForParentElement,
+})
 ```
 
 ##### Dynamic Components
@@ -761,6 +783,33 @@ const online = useOnline()
 - GETTERS: Methods that can grab something from state possibly modify and return it
 - Getters like computed properties
 
+#### Pinia Setup
+- Typically Pinia files go in a **src/stores** folder
+```
+<!-- install -->
+npm install pinia
+```
+- Create a pinia root store and pass to App
+```js
+//MAIN.JS
+import {createPinia} from 'pinia'
+
+app.use(createPinia())
+```
+
+```js
+// src/stores/example.js
+
+import { defineStore } from 'pinia'
+
+export const useCounterStore = defineStore('counter', {
+  //State
+  //Actions
+  //Getters
+})
+```
+- More info can be found at [Pinia Docs](https://pinia.vuejs.org)
+
 ##### Composable State vs Vuex vs Pinia
 - 3 different ways to integrate state management
 - Composables: variable=data, methods=actions, computed properties=getters
@@ -872,3 +921,11 @@ or download
 ```css
 @import "bulma/css/bulma.min.css"
 ```
+
+### PRO TIPS
+- 💡 When adding state management to app **the earlier the better**
+- 💡 Remember where the data is coming from (props, state, etc) in order to pass it correctly
+- 💡
+- 💡
+- 💡
+- 💡
