@@ -243,6 +243,7 @@ watch(dataItemToWatch, (newValue, oldValue) => {
 //SCRIPT
 
 const vAutofocus = {   // => v-autofocus
+  //lifecycle hook
   mounted: (el) => {
     el.focus()
   }
@@ -707,7 +708,7 @@ import { inject } from "vue";
 const data = inject('reference')
 ```
 ## 11. Composables
-- Compositions equivalent to mixins from options api
+- Composition's equivalent to mixins from options api
 - Extracts reactive data and/or components into own file to be used in different part of code
 - Code that can be reused in other parts of code so we don't have to rewrite that code
 - Composable is just a function (returns a single value)
@@ -716,7 +717,7 @@ const data = inject('reference')
 - Can use composables for global state management
 - Recommended composables go into the folder src/**use**
 - File names should be in camelCase and begin with the word **use** (.js extension)
-- Function should be same name as file
+- Function name should be same name as file name
 
 
 ##### Make Composable
@@ -835,6 +836,14 @@ const online = useOnline()
 <!-- use -->
 <p>You are currently {{ online ? 'online' : 'offline'}}</p>
 ```
+
+#### Composable With Multiple Parameters
+- Just add another parameter to the composable root function
+
+```js
+
+```
+
 
 
 
