@@ -162,6 +162,71 @@ const appTitle = "My Amazing App!"
 <!-- TEMPLATE -->
 <h2>{{appTitle}}</h2>
 ```
+
+## 5. Methods Computed and Watch
+#### Methods
+- Methods are simple just write a named function
+```html
+<!-- TEMPLATE -->
+<button @click="myMessage('User 1')"></button>
+```
+```js
+//SCRIPT
+const myMessage = (message) => {
+   return 'Hello' + message
+}
+```
+
+#### Computed properties
+- Properties generated based on reactive data
+- Cached, only updated when dependencies change
+- In composition API must import
+- Can create anywhere among the script section
+- Filters have been removed from Vue 3. Just use computed properties or methods
+
+```js
+//OPTIONS API
+computed: {
+   oddOrEven() {
+      return 'odd or even'
+   }
+}
+```
+
+```js
+//IMPORT
+import {computed} from 'vue';
+//SETUP
+const oddOrEven = computed(function() {
+   return 'odd or even'
+})
+```
+```html
+<!-- USE -->
+<p>{{oddOrEven}}</p>
+```
+#### Watchers
+- Watchers allow us to watch a data property and then do something whenever it changes
+- Can place anywhere within script section
+
+```js
+//  OPTIONS API
+watch: {
+   count(oldCount, newCount) {
+      alert('new count updated!')
+   }
+}
+```
+```js
+//IMPORT
+import { watch } from 'vue'
+// SETUP
+watch(dataItemToWatch, (newValue, oldValue) => {
+   alert(newCount)
+} )
+```
+
+
 ### 7. Custom Directives
 - Camel case start with v.
 - Can make global by putting into own file and exporting
