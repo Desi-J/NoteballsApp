@@ -661,6 +661,17 @@ const handleButtonClick () => {
             ref="newNoteRef"
           />
 ```
+- **WARNING** in production modelValue throws an error when a child tries to update a parent???
+- Do this instead...
+```js
+<textarea
+            :value="modelValue"
+            @input="$emit('update:modelValue', $event.target.value)"
+            class="textarea"
+            placeholder="Add a new note"
+            ref="newNoteRef"
+          />
+```
 
 #### Expose Child Methods to Parents
 - use defineExpose to make child methods available to parents
