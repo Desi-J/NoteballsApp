@@ -601,8 +601,8 @@ emit("hideModal")
 - Can access ref directly from child component
 - Massively simplifies child to parent communication
 - Often removes the need for custom events and listening for them
-- v-model 
-- modelValue
+- v-model (v-bind + v-on:input)
+- modelValue (how you receive v-model prop from parent)
 
 - Hook up **v-model** to parent component
 ```js
@@ -844,7 +844,25 @@ const online = useOnline()
 
 ```
 
+## Add/Remove Event Listeners
+- Callback function for an event listener must be external to remove
+```js
+/*
+  keyboard control
+*/
+const handleKeyboard = e => {
+  console.log('close it')
+  if (e.key === 'Escape') closeModal()
+}
 
+onMounted(() => {
+  document.addEventListener('keyup', handleKeyboard)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('keyup', handleKeyboard)
+})
+```
 
 
 ## 12. State Management With Pinia
@@ -999,7 +1017,7 @@ or download
 ### PRO TIPS
 - 💡 When adding state management to app **the earlier the better**
 - 💡 Remember where the data is coming from (props, state, etc) in order to pass it correctly
-- 💡
+- 💡 Bad practice to use a **v-if** or **v-else** directive on component using **v-for** use a **template tag**
 - 💡
 - 💡
 - 💡

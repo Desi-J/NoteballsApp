@@ -17,13 +17,29 @@
       </template>
     </AddEditNote>
 
-   
-    <!-- notes list -->
-    <Note
-      v-for="note in storeNotes.notes"
-      :key="note.id"
-      :note="note"
+    <!-- progress bar -->
+    <progress
+      v-if="!storeNotes.notesLoaded"
+      class="progress is-large is-success"
+      max="100"
     />
+
+    <!-- notes list -->
+    <template v-else>
+       <Note
+        v-for="note in storeNotes.notes"
+        :key="note.id"
+        :note="note"
+      />
+    </template>
+   
+   <!-- Placeholder message -->
+   <div
+     v-if="!storeNotes.notes.length"
+     class="is-size-4 has-text-centered has-text-grey-light is-family-monospace py-6"
+   >
+    No notes here yet...
+   </div>
 
   </div>
 </template>
@@ -67,4 +83,6 @@ const addNote = () => {
 */
 
 useWatchCharacters(newNote)
+
+
 </script>

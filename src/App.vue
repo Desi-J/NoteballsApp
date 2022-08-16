@@ -7,7 +7,25 @@
 </template>
 
 <script setup>
+/*
+  imports
+*/
+import { onMounted } from 'vue';
 import NavBar from '@/components/layout/NavBar.vue'
+import { useStoreAuth } from '@/stores/storeAuth'
+import { auth } from './js/firebase';
+
+/*
+  store
+*/
+const storeAuth = useStoreAuth()
+
+/*
+  mounted
+*/
+onMounted(() => {
+  storeAuth.init()
+})
 </script>
 
 <style>

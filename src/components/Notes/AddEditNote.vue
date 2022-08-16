@@ -61,7 +61,6 @@ const props = defineProps({
 */
 
 const focusTextArea = () => {
-   console.log('focusTextArea')
    textareaRef.value.focus()
 }
 
